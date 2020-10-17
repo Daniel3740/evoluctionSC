@@ -1,0 +1,20 @@
+{
+  "name": "evoluctionsc",
+  "version": "1.0.0",
+  "description": "Prueba desarrollador",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ESRI",
+    "fronend",
+    "backend",
+    "mvc",
+    "login",
+    "mapas",
+    "veredas"
+  ],
+  "author": "Daniel Osorio",
+  "license": "ISC"
+}
