@@ -16,5 +16,18 @@
     "veredas"
   ],
   "author": "Daniel Osorio",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Daniel3740/evoluctionSC/issues"
+  },
+  "homepage": "https://github.com/Daniel3740/evoluctionSC#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "knex": "^0.21.6",
+    "pg": "^8.4.1"
+  }
 }
