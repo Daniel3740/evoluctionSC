@@ -33,7 +33,7 @@ const signup = (request, response) => {
   const signin = (request, response) => {
     const userReq = request.body
     let user
-    findUserBD(userReq)
+    findUserBD(userReq.username)
     .then(foundUser => {
         user = foundUser
         return checkPassword(userReq.password, foundUser)
@@ -41,6 +41,7 @@ const signup = (request, response) => {
       .then(() => createToken())
       .then(token => updateUserToken(token, user))
       .then(() => {
+        delete user['password']
         response.status(200).json(user)
         delete user.password_digest
       })
@@ -53,7 +54,7 @@ const signup = (request, response) => {
 //Create user db
 const createUser = async (user) => {
     const data = await database.raw(
-        "INSERT INTO users (username, email, password, creation_date, token) VALUES (?, ?, ?, ?) RETURNING id, username, creation_date, token",
+        "INSERT INTO users (username, email, password, creation_date, token) VALUES (?, ?, ?, ?, ?) RETURNING id, username, creation_date, token",
         [user.username, user.email, user.password_digest, new Date(), user.token,]
       );
       return data.rows[0];
@@ -86,7 +87,7 @@ const hashPassword = (password) => {
 
   const checkPassword = (reqPassword, foundUser) => {
     return new Promise((resolve, reject) =>
-      bcrypt.compare(reqPassword, foundUser.password_digest, (err, response) => {
+      bcrypt.compare(reqPassword, foundUser.password, (err, response) => {
           if (err) {
             reject(err)
           }
@@ -99,14 +100,30 @@ const hashPassword = (password) => {
     )
   }
 
-  //UPDATE token
+  //UPDATE token and online
   const updateUserToken = async (token, user) => {
-    const data = await database.raw("UPDATE users SET token = ? WHERE id = ?", [token, user.id]);
+    const data = await database.raw("UPDATE users SET online = ?, token = ? WHERE id = ?", ['TRUE', token, user.id]);
       return data.rows[0];
+  }
+
+
+  //logout user
+  const logout = (request, response) => {
+    const user = request.body
+    updateUserOnline(user)
+    .then(() => response.status(200).json({ msj:'Sesion finalizada' }))
+    .catch((err) => response.status(500).json({error:err}))
+  }
+
+  //UPDATE  online off
+  const updateUserOnline = async (user) => {
+    const data = await database.raw("UPDATE users SET online = ? WHERE id = ?", ['FALSE', user.id])
+    return data.rows[0];
   }
 
 
 module.exports = {
     signup,
-    signin
+    signin,
+    logout
 }
