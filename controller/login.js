@@ -42,6 +42,7 @@ const signup = (request, response) => {
       .then(token => updateUserToken(token, user))
       .then(() => {
         delete user['password']
+        user['redirect'] = './pages';
         response.status(200).json(user)
         delete user.password_digest
       })
