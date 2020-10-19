@@ -52,9 +52,23 @@
     }
   </style>
 
+<style type="text/css">
+  
+  /*Grid need a explicit width/height by default*/
+  #grid {
+      width: 30em;
+      height: 15em;
+  }
+    </style>
+  <link rel="stylesheet" href="../dojo-release-1.8.14/dojo/resources/dojo.css">
+  <link rel="stylesheet" href="../dojo-release-1.8.14/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="../dojo-release-1.8.14/dojox/grid/enhanced/resources/tundra/EnhancedGrid.css">
+  <!-- <link rel="stylesheet" href="../dojo-release-1.8.14/dojox/grid/enhanced/resources/claro/EnhancedGrid.css"> -->
+  <link rel="stylesheet" href="../dojo-release-1.8.14/dojox/grid/enhanced/resources/EnhancedGrid_rtl.css">
   <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/themes/light/main.css">
 
   <script src="https://js.arcgis.com/4.17/"></script>
+  
 
 
 </head>
@@ -62,26 +76,32 @@
 <body>
   <div id="viewDiv"></div>
   <div class="container">
-    <div id="tableDiv"><span id='close'
-        <span onclick="this.parentNode.parentNode.style.display = 'none';">x</span>
-    </div>
+    <div id="tableDiv"></div>
   </div>
   <div id="actions" class="esri-widget">
-    <button class="esri-button" id="table"><span class="font-size-3 esri-icon-table"
-        aria-label="table icon"></span></button>
-    <button class="esri-button" id="zoom"><span class="font-size-3 esri-icon-zoom-in-magnifying-glass"
+    
+    <button class="esri-button" id="zoom" title="Zoom a la seleccion"><span class="font-size-3 esri-icon-zoom-in-magnifying-glass"
         aria-label="zoom-in-magnifying-glass icon"></span></button>
-    <button class="esri-button" id="fullextent"><span class="font-size-3 esri-icon-zoom-out-magnifying-glass"
+    <button class="esri-button" id="fullextent" title="Extent mapa"><span class="font-size-3 esri-icon-zoom-out-magnifying-glass"
         aria-label="zoom-out-magnifying-glass icon"></span></button>
-    <button class="esri-button" id="users"><span class="font-size-3 esri-icon-user"
+    <button class="esri-button" id="users" title="Listar usuarios"><span class="font-size-3 esri-icon-user"
         aria-label="user icon"></span></button>
-    <button class="esri-button" id="logout"><span class="font-size-3 esri-icon-sign-out"
+    <button class="esri-button" id="logout" title="Cerrar sesion"><span class="font-size-3 esri-icon-sign-out"
         aria-label="sign-out icon"></span></button>
   </div>
+
+  <div id="gridDiv" class="esri-widget" style="visibility: hidden;">Usuarios</div>
 
 
   <!-- Controllador del mapa -->
   <script src="../js/controller/mapa.js"></script>
+
+  <!-- Controllador logout -->
+  <script src="../js/controller/logout.js"></script>
+
+    <!-- Controllador de tabla usuarios -->
+    <script src="../js/controller/users.js"></script>
+
 </body>
 
 </html>

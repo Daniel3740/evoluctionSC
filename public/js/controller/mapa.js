@@ -2,7 +2,7 @@ require([
   "esri/Map",
   "esri/views/MapView",
   "esri/layers/FeatureLayer",
-  "esri/widgets/FeatureTable"
+  "esri/widgets/FeatureTable",
 ], function (Map, MapView, FeatureLayer, FeatureTable) {
   const features = [];
   const webmap = new Map({
@@ -23,24 +23,23 @@ require([
     },
     opacity: 0.30,
     labelingInfo: [trailheadsLabels],
+    popupTemplate: { // Enable a popup
+      title: "{DEPTO}", // Show attribute value
+      content: "Area del departamento de {DPTO_NAREA} " // Display text in pop-up
+    }
   });
 
   webmap.add(departamentosLayer);
 
-  // Capa de veredas
-  var veredasLayer = new FeatureLayer({
+  var featureLayer = new FeatureLayer({
     url: "https://ags.esri.co/arcgis/rest/services/DatosAbiertos/VEREDAS_2016/MapServer/0/",
-    renderer: openSpacesRenderer,
-    mode: FeatureLayer.MODE_ONDEMAND,
-    opacity: 0.20,
-    title: 'Veredas Colombia',
+    title: "Veredas de Colombia",
     popupTemplate: { // Enable a popup
       title: "{NOMBRE_VER}", // Show attribute value
       content: "Ubicada en el departamento del  {NOM_DEP} " // Display text in pop-up
     }
   });
-
-  webmap.add(veredasLayer);
+  // webmap.add(featureLayer);
 
 
   let view = new MapView({
@@ -49,16 +48,12 @@ require([
     center: [-71.499, 2.043], // lon, lat
     zoom: 5,
     popup: {
-      autoOpenEnabled: false
+      autoOpenEnabled: true
     } //disable popups
   });
 
   view.when(function () {
-    var featureLayer = new FeatureLayer({
-      url: "https://ags.esri.co/arcgis/rest/services/DatosAbiertos/VEREDAS_2016/MapServer/0/",
-      title: "Veredas de Colombia"
-    });
-
+    view.ui.add(document.getElementById("gridDiv"), "bottom-left");
     // Create the feature table
     const featureTable = new FeatureTable({
       view: view, // required for feature highlight to work
@@ -112,20 +107,6 @@ require([
       });
     });
 
-    // Listen for the click on the view and select any associated row in the table
-    view.on("immediate-click", function (event) {
-      view.hitTest(event).then(function (response) {
-        const candidate = response.results.find(function (result) {
-          return (
-            result.graphic &&
-            result.graphic.layer &&
-            result.graphic.layer === featureLayer
-          );
-        });
-        // Select the rows of the clicked feature
-        candidate && featureTable.selectRows(candidate.graphic);
-      });
-    });
 
     const zoomBtn = document.getElementById("zoom");
     const fullExtentBtn = document.getElementById("fullextent");
@@ -185,47 +166,3 @@ var trailheadsLabels = {
     expression: "$feature.DEPTO"
   }
 };
-
-
-function createFillSymbol(value, color) {
-  return {
-    value: value,
-    symbol: {
-      color: color,
-      type: "simple-fill",
-      style: "solid",
-      outline: {
-        style: "none"
-      }
-    },
-    label: value
-  };
-}
-
-var openSpacesRenderer = {
-  type: "unique-value",
-  field: "NOM_DEP",
-  uniqueValueInfos: [
-    createFillSymbol("VALLE DEL CAUCA", "#9E559C"),
-    createFillSymbol("CUNDINAMARCA", "#A7C636"),
-    createFillSymbol("ANTIOQUIA", "#149ECE"),
-    createFillSymbol("CASANARE", "#ED5151")
-  ]
-};
-
-
-require(["dojo/dnd/Moveable", "dojo/dom", "dojo/on", "dojo/domReady!"],
-  function (Moveable, dom, on) {
-    on(dom.byId("table"), "click", function () {
-      var dnd = new Moveable(dom.byId("tableDiv"));
-    });
-  });
-
-
-
-document.querySelector('#logout').addEventListener('click', (e) => {
-  sessionStorage.clear();
-  window.location.href = '../';
-  console.log('cerrar sesion');
-
-});

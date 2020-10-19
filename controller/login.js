@@ -118,10 +118,12 @@ const hashPassword = (password) => {
 
   //UPDATE  online off
   const updateUserOnline = async (user) => {
-    const data = await database.raw("UPDATE users SET online = ? WHERE id = ?", ['FALSE', user.id])
+    const data = await database.raw("UPDATE users SET estado = ? WHERE id = ?", ['Inactivo', user.id])
     return data.rows[0];
   }
 
+
+ 
 
 module.exports = {
     signup,

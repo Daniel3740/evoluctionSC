@@ -6,6 +6,8 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { signin, signup, logout } = require('../controller/login');
+const { getUsers } = require('../controller/users');
+
 const { validarCampos } = require('../middlewares/validar_campos');
 
 const router = Router();
@@ -30,6 +32,10 @@ router.post('/acceso', [
 router.post('/salir', [
     check('id','Debe ingresar un ID').not().isEmpty(),
 ], logout );
+
+router.post('/getusers', [
+    check('token','Debe ingresar un token').not().isEmpty(),
+], getUsers );
 
 
 module.exports = router;
