@@ -22,12 +22,18 @@
   },
   "homepage": "https://github.com/Daniel3740/evoluctionSC#readme",
   "dependencies": {
+    "arcgis-js-api": "^4.17.1",
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "dojo": "^1.16.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
     "knex": "^0.21.6",
     "pg": "^8.4.1"
+  },
+  "devDependencies": {
+    "dojo-util": "github:Esri/dojo-util"
   }
 }

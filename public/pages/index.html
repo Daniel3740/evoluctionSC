@@ -1,11 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Mapa Evoluction</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #viewDiv {
+      height: 50%;
+      width: 100%;
+    }
+
+    #table {
+      margin-bottom: 5px;
+    }
+
+    #zoom {
+      margin-bottom: 5px;
+    }
+
+    #fullextent {
+      margin-bottom: 5px;
+    }
+
+    #users {
+      margin-bottom: 5px;
+    }
+
+    #actions {
+      padding: 5px;
+    }
+
+    .container {
+      height: 50%;
+      width: 100%;
+    }
+
+    #close {
+      /* float: right; */
+      display: inline-block;
+      padding: 2px 5px;
+      background: #ccc;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/themes/light/main.css">
+
+  <script src="https://js.arcgis.com/4.17/"></script>
+
+
 </head>
+
 <body>
-    <h5>Ingreso con exito al mapa</h5>
+  <div id="viewDiv"></div>
+  <div class="container">
+    <div id="tableDiv"><span id='close'
+        <span onclick="this.parentNode.parentNode.style.display = 'none';">x</span>
+    </div>
+  </div>
+  <div id="actions" class="esri-widget">
+    <button class="esri-button" id="table"><span class="font-size-3 esri-icon-table"
+        aria-label="table icon"></span></button>
+    <button class="esri-button" id="zoom"><span class="font-size-3 esri-icon-zoom-in-magnifying-glass"
+        aria-label="zoom-in-magnifying-glass icon"></span></button>
+    <button class="esri-button" id="fullextent"><span class="font-size-3 esri-icon-zoom-out-magnifying-glass"
+        aria-label="zoom-out-magnifying-glass icon"></span></button>
+    <button class="esri-button" id="users"><span class="font-size-3 esri-icon-user"
+        aria-label="user icon"></span></button>
+    <button class="esri-button" id="logout"><span class="font-size-3 esri-icon-sign-out"
+        aria-label="sign-out icon"></span></button>
+  </div>
+
+
+  <!-- Controllador del mapa -->
+  <script src="../js/controller/mapa.js"></script>
 </body>
+
 </html>
